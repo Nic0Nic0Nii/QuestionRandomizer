@@ -3,8 +3,14 @@ package sig;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -16,29 +22,47 @@ import sig.components.QuestionGroup;
 public class QuestionRandomizer {
 
     public static String[] readFromFile(String filename) {
-		File file = new File(filename);
-		//System.out.println(file.getAbsolutePath());
-		List<String> contents= new ArrayList<String>();
-		if (file.exists()) {
-			try(
-					FileReader fw = new FileReader(filename);
-				    BufferedReader bw = new BufferedReader(fw);)
-				{
-					String readline = bw.readLine();
-					do {
-						if (readline!=null) {
-							//System.out.println(readline);
-							contents.add(readline);
-							readline = bw.readLine();
-						}} while (readline!=null);
-					fw.close();
-					bw.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-		}
-		return contents.toArray(new String[contents.size()]);
-	}
+        File file = new File(filename);
+        //System.out.println(file.getAbsolutePath());
+        List<String> contents= new ArrayList<String>();
+        if (file.exists()) {
+            try(
+                    FileReader fw = new FileReader(filename);
+                    BufferedReader bw = new BufferedReader(fw);)
+                {
+                    String readline = bw.readLine();
+                    do {
+                        if (readline!=null) {
+                            //System.out.println(readline);
+                            contents.add(readline);
+                            readline = bw.readLine();
+                        }} while (readline!=null);
+                    fw.close();
+                    bw.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+        }
+        return contents.toArray(new String[contents.size()]);
+    }
+    public static void logToFile(String message, String filename) {
+        File file = new File(filename);
+            try {
+
+                if (!file.exists()) {
+                    file.createNewFile();
+                }
+                OutputStream out = new FileOutputStream(file,true);
+                Writer writer = new OutputStreamWriter(out, StandardCharsets.UTF_8);
+                PrintWriter pw = new PrintWriter(writer);
+
+                pw.println(message);
+                pw.flush();
+                pw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
     public static boolean isNumeric(String strNum) {
         if (strNum == null) {
@@ -108,8 +132,9 @@ public class QuestionRandomizer {
         for (QuestionGroup qg : groups) {
             while (qg.getQuestions().size()>0) {
                 Question qqq = qg.getQuestions().remove((int)(Math.random()*qg.getQuestions().size()));
-                System.out.println((qCount++)+". "+qqq.getText()+"\n"+
-                qqq.DisplayAnswers());
+                String output = (qCount++)+". "+qqq.getText()+"\n"+qqq.DisplayAnswers();
+                System.out.println(output);
+                logToFile(output,"output.txt");
             }
         }
     }
