@@ -1,7 +1,5 @@
 package sig.components;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Question {
