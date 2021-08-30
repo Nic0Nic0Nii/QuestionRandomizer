@@ -1,2 +1,2 @@
-javac src/sig/*.java -d bin
+javac src/sig/*.java src/sig/components/*.java -d bin
 java -cp bin sig/QuestionRandomizer
