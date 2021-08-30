@@ -15,8 +15,13 @@ public class QuestionGroup {
         this.questions = questions;
     }
 
-    public QuestionGroup(Question[]questions) {
-        this.questions=new ArrayList<Question>(Arrays.asList(questions));
+    public QuestionGroup(List<Question>questions) {
+        this.questions=questions;
+    }
+
+    @Override
+    public String toString() {
+        return "QuestionGroup [questions=" + questions + "]";
     }
     
 }

@@ -28,11 +28,16 @@ public class Question {
             finalStr.append((char)('a'+(aCount++)));
             finalStr.append(". ");
             finalStr.append(a.getText());
+            finalStr.append("\n");
         }
         return finalStr.toString();
     }
-    public Question(String text,Answer[] answers) {
+    public Question(String text,List<Answer> answers) {
         this.text = text;
-        this.answers = new ArrayList<Answer>(Arrays.asList(answers));
+        this.answers = answers;
+    }
+    @Override
+    public String toString() {
+        return "Question [answers=" + answers + ", text=" + text + "]";
     }
 }

@@ -2,9 +2,14 @@ package sig.components;
 
 public class Answer {
     String text;
+    boolean answer=false;
+    public Answer(String text,boolean answer) {
+        this.text = text;
+        this.answer=answer;
+    }
 
     public Answer(String text) {
-        this.text = text;
+        this(text,false);
     }
 
     public String getText() {
@@ -13,5 +18,10 @@ public class Answer {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    @Override
+    public String toString() {
+        return "Answer [answer=" + answer + ", text=" + text + "]";
     }
 }
