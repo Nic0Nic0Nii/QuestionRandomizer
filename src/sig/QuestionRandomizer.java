@@ -118,7 +118,7 @@ public class QuestionRandomizer {
                 }
             }
             if (m==Mode.QUESTION) {
-                qq.setText((qq.getText().length()>0?(qq.getText()+"\n"):"")+(d.indexOf('.')!=-1?d.substring(d.indexOf('.')+1):d));
+                qq.setText((qq.getText().length()>0?(qq.getText()+" "):"")+(d.indexOf('.')!=-1?d.substring(d.indexOf('.')+1):d));
             } else {
                 a.add(new Answer(d.substring(d.indexOf('.')+1),d.charAt(0)=='X'));
             }
