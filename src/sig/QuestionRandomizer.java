@@ -86,6 +86,9 @@ public class QuestionRandomizer {
     }
 
     public static void main(String[] args) {
+        new File("answers.txt").delete();
+        new File("output.txt").delete();
+
         List<QuestionGroup> groups = new ArrayList<QuestionGroup>();
 
         String[] data = readFromFile("questions");
@@ -132,9 +135,12 @@ public class QuestionRandomizer {
         for (QuestionGroup qg : groups) {
             while (qg.getQuestions().size()>0) {
                 Question qqq = qg.getQuestions().remove((int)(Math.random()*qg.getQuestions().size()));
-                String output = (qCount++)+". "+qqq.getText()+"\n"+qqq.DisplayAnswers();
+                String[] questions = qqq.DisplayAnswers();
+                String output = (qCount)+". "+qqq.getText()+"\n"+questions[0];
+                String outputAnswerGuide = (qCount++)+". "+qqq.getText()+"\n"+questions[1];
                 System.out.println(output);
                 logToFile(output,"output.txt");
+                logToFile(outputAnswerGuide,"answers.txt");
             }
         }
     }
